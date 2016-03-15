@@ -27,8 +27,6 @@ import com.slayer.service.impl.LMSBookLocalServiceImpl;
  */
 public class LibraryPortlet extends MVCPortlet {
 	
-	
-
 	public void updateBook(ActionRequest actionRequest, ActionResponse actionResponse)  throws IOException, PortletException {
 		
 		String bookTitle =	ParamUtil.getString(actionRequest, "bookTitle");

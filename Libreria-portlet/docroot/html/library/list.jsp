@@ -1,33 +1,37 @@
 <%@include file="/html/library/init.jsp"%>
+<%@page import="com.liferay.portal.kernel.util.ListUtil" %>
 
-<%@page import="java.util.List"%>
-<%@page import="com.slayer.model.LMSBook"%>
-<%@page import="com.slayer.service.LMSBookLocalServiceUtil"%>
 
-<h1>List of books in our Library</h1>
+
+<h1>Lista de libros en la biblioteca</h1>
 <%
-List<LMSBook> books =
-LMSBookLocalServiceUtil.getLMSBooks(0, LMSBookLocalServiceUtil.getLMSBooksCount());
+	List<LMSBook> books = LMSBookLocalServiceUtil.getLMSBooks(0,
+			LMSBookLocalServiceUtil.getLMSBooksCount());
 %>
-<table border="1" width="80%">
-<tr>
-<th>Book Title</th>
-<th>Author</th>
-<th>Date Added</th>
-</tr>
-<%
-for (LMSBook book : books) {
-%>
-<tr>
-<td><%= book.getBookTitle() %></td>
-<td><%= book.getAuthor() %></td>
-<td><%= book.getCreateDate() %></td>
-</tr>
-<%
-}
-%>
-</table>
-<br/><a href="<portlet:renderURL/>">&laquo; Go Back</a>
+
+<liferay-ui:search-container delta="4"
+emptyResultsMessage="No se encuentran libros con esos criterios de búsqueda">
+
+	<liferay-ui:search-container-results
+		 total="<%= books.size() %>"
+		 results="<%= ListUtil.subList (books,
+				 searchContainer.getStart(), searchContainer.getEnd()) %>"/>
+	
+	<liferay-ui:search-container-row modelVar="book" className="LMSBook">
+		<liferay-ui:search-container-column-text name="Título del libro" property="bookTitle"/>
+		<liferay-ui:search-container-column-text name="Autor" property="author"/>
+		<liferay-ui:search-container-column-text name="Fecha añadido" property="createDate"/>
+	</liferay-ui:search-container-row>
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>"/>
+</liferay-ui:search-container>
+		
+		 
+	
+
+
+
+<br />
+<a href="<portlet:renderURL/>">&laquo; Volver</a>
 
 
 
